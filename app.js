@@ -1,7 +1,8 @@
 
 discs = {
+    "Tears": document.getElementById("tears"),
     "Creator": document.getElementById("creator"),
-    "Creator (MB)": document.getElementById("creator_music_box"),
+    "Creator(MB)": document.getElementById("creator_music_box"),
     "Precipice": document.getElementById("precipice"),
     "Relic": document.getElementById("relic"),
     "5": document.getElementById("5"),
@@ -22,13 +23,14 @@ discs = {
 }
 
 discsBy = {
+    "Tears": "by Amos Roddy",
     "5": "by Samuel Åberg",
     "11": "by C418",
     "13": "by C418",
     "Blocks": "by C418",
     "Cat": "by C418",
     "Chirp": "by C418",
-    "Creator (MB)": "by Lena Raine",
+    "Creator(MB)": "by Lena Raine",
     "Creator": "by Lena Raine",
     "Mall": "by C418",
     "Mellohi": "by C418",
@@ -43,7 +45,7 @@ discsBy = {
     "Ward": "by C418",
 }
 
-autoPlayOrder = ["Creator", "Creator (MB)", "Precipice", "Relic", "5", "Otherside", "Pigstep", "Cat", "Chirp", "Blocks", "Mall", "Mellohi", "Far", "Stal", "Strad", "Wait", "Ward", "11", "13"]
+autoPlayOrder = ["Tears","Creator", "Creator(MB)", "Precipice", "Relic", "5", "Otherside", "Pigstep", "Cat", "Chirp", "Blocks", "Mall", "Mellohi", "Far", "Stal", "Strad", "Wait", "Ward", "11", "13"]
 
 
 playing = "5"
@@ -57,7 +59,7 @@ queueSongsCards = []
 function addCards() {
 
     // horizontal
-    for (cardIndex = 2; cardIndex < autoPlayOrder.length; cardIndex++) {
+    for (cardIndex = 0; cardIndex < autoPlayOrder.length; cardIndex++) {
         discName = "disc_" + (autoPlayOrder[cardIndex]).toLowerCase()
         document.getElementById("horizontalCards").insertAdjacentHTML('beforeend',
             `
@@ -92,7 +94,7 @@ function addCards() {
     }
 
     // vertical
-    for (cardIndex = 2; cardIndex < autoPlayOrder.length; cardIndex++) {
+    for (cardIndex = 0; cardIndex < autoPlayOrder.length; cardIndex++) {
         discName = "disc_" + (autoPlayOrder[cardIndex]).toLowerCase()
         document.getElementById("verticalCards").insertAdjacentHTML('beforeend',
             `
@@ -312,7 +314,7 @@ function nextTrackBar() {
     }
     else{
         toPlay = autoPlayOrder[(autoPlayOrder.indexOf(playing)) + 1]
-        if ((autoPlayOrder.indexOf(playing)) == 18) {
+        if ((autoPlayOrder.indexOf(playing)) == (autoPlayOrder.length-1)) {
             toPlay = "Creator"
         }
         play(toPlay)
