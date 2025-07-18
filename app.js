@@ -315,7 +315,7 @@ function nextTrackBar() {
     else{
         toPlay = autoPlayOrder[(autoPlayOrder.indexOf(playing)) + 1]
         if ((autoPlayOrder.indexOf(playing)) == (autoPlayOrder.length-1)) {
-            toPlay = "Creator"
+            toPlay = autoPlayOrder[0]
         }
         play(toPlay)
     }
@@ -334,7 +334,7 @@ function previousTrackBar() {
 
     toPlay = autoPlayOrder[(autoPlayOrder.indexOf(playing)) - 1]
     if ((autoPlayOrder.indexOf(playing)) == 0) {
-        toPlay = "13"
+        toPlay = autoPlayOrder[autoPlayOrder.length-1]
     }
     play(toPlay)
 
