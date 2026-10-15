@@ -1,5 +1,7 @@
 
 discs = {
+    "Lava Chicken": document.getElementById("lava_chicken"),
+    "Bounce": document.getElementById("bounce"),
     "Tears": document.getElementById("tears"),
     "Creator": document.getElementById("creator"),
     "Creator(MB)": document.getElementById("creator_music_box"),
@@ -23,6 +25,8 @@ discs = {
 }
 
 discsBy = {
+    "Lava Chicken": "by Hyper Potions",
+    "Bounce": "by fingerspit",
     "Tears": "by Amos Roddy",
     "5": "by Samuel Åberg",
     "11": "by C418",
@@ -45,7 +49,7 @@ discsBy = {
     "Ward": "by C418",
 }
 
-autoPlayOrder = ["Tears","Creator", "Creator(MB)", "Precipice", "Relic", "5", "Otherside", "Pigstep", "Cat", "Chirp", "Blocks", "Mall", "Mellohi", "Far", "Stal", "Strad", "Wait", "Ward", "11", "13"]
+autoPlayOrder = ["Bounce", "Lava Chicken", "Tears", "Creator", "Creator(MB)", "Precipice", "Relic", "5", "Otherside", "Pigstep", "Cat", "Chirp", "Blocks", "Mall", "Mellohi", "Far", "Stal", "Strad", "Wait", "Ward", "11", "13"]
 
 
 playing = "5"
@@ -60,7 +64,7 @@ function addCards() {
 
     // horizontal
     for (cardIndex = 0; cardIndex < autoPlayOrder.length; cardIndex++) {
-        discName = "disc_" + (autoPlayOrder[cardIndex]).toLowerCase()
+        discName = "disc_" + (autoPlayOrder[cardIndex]).toLowerCase().replace(" ","_")
         document.getElementById("horizontalCards").insertAdjacentHTML('beforeend',
             `
             
@@ -91,39 +95,33 @@ function addCards() {
             
             
             `)
-    }
 
-    // vertical
-    for (cardIndex = 0; cardIndex < autoPlayOrder.length; cardIndex++) {
-        discName = "disc_" + (autoPlayOrder[cardIndex]).toLowerCase()
         document.getElementById("verticalCards").insertAdjacentHTML('beforeend',
             `
-                <!-- ${autoPlayOrder[cardIndex]} -->
-                <div class="col-5 col-md-4 col-lg-3 col-xl-2 musicCard rounded-1 pb-2 m-2">
-
-                    <div class="d-flex flex-column justify-content-center">
-
-                        <img class="musicCardImg my-auto mx-auto " src="images/${discName}.png " alt="">
-
-
-
-                        <div class="d-flex flex-column justify-content-center align-items-center mb-2">
-
-                            <text class="musicCard-name">${autoPlayOrder[cardIndex]}</text>
-                            <text class="musicCard-by">${(discsBy[autoPlayOrder[cardIndex]]).slice(3)}</text>
-
+                    <!-- ${autoPlayOrder[cardIndex]} -->
+                    <div class="col-5 col-md-4 col-lg-3 col-xl-2 musicCard rounded-1 pb-2 m-2">
+    
+                        <div class="d-flex flex-column justify-content-center">
+    
+                            <img class="musicCardImg my-auto mx-auto " src="images/${discName}.png " alt="">
+    
+                            <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+    
+                                <text class="musicCard-name">${autoPlayOrder[cardIndex]}</text>
+                                <text class="musicCard-by">${(discsBy[autoPlayOrder[cardIndex]]).slice(3)}</text>
+    
+                            </div>
+    
+                            <div class="text-center justify-content-center  d-flex my-2">
+                                <p name="${(autoPlayOrder[cardIndex])}Play" style="width: fit-content"
+                                     class="px-3 mx-0 my-auto rounded-1 musciCardPlay text-center"
+                                    onclick="play('${autoPlayOrder[cardIndex]}')" >Play</p>
+    
+                            </div>
                         </div>
-
-                        <div class="text-center justify-content-center  d-flex my-2">
-                            <p name="${(autoPlayOrder[cardIndex])}Play" style="width: fit-content"
-                                 class="px-3 mx-0 my-auto rounded-1 musciCardPlay text-center"
-                                onclick="play('${autoPlayOrder[cardIndex]}')" >Play</p>
-
-                        </div>
+    
                     </div>
-
-                </div>
-            `)
+                `)
     }
 
     // queue song
@@ -283,7 +281,7 @@ function pauseBar() {
     discs[playing].pause()
     isPlaying = false
 
- 
+
     console.log("eeeee")
 
     document.getElementsByName(playing + "Play").forEach(item => {
@@ -299,27 +297,27 @@ function nextTrackBar() {
         discs[playing].loop = false
     }
 
-    if(queueSongsList.length>0){
-        
+    if (queueSongsList.length > 0) {
+
         toPlay = queueSongsList[0]
         queueSongsList.shift()
         queueSongsCards[0].remove()
         queueSongsCards.shift()
-    
-        for(i in queueSongsList){
-            document.getElementById("queueNumber" +queueSongsCards[i].id.slice(9)).innerHTML = Number(document.getElementById("queueNumber" +queueSongsCards[i].id.slice(9)).innerHTML) - 1
+
+        for (i in queueSongsList) {
+            document.getElementById("queueNumber" + queueSongsCards[i].id.slice(9)).innerHTML = Number(document.getElementById("queueNumber" + queueSongsCards[i].id.slice(9)).innerHTML) - 1
         }
 
         play(toPlay)
     }
-    else{
+    else {
         toPlay = autoPlayOrder[(autoPlayOrder.indexOf(playing)) + 1]
-        if ((autoPlayOrder.indexOf(playing)) == (autoPlayOrder.length-1)) {
+        if ((autoPlayOrder.indexOf(playing)) == (autoPlayOrder.length - 1)) {
             toPlay = autoPlayOrder[0]
         }
         play(toPlay)
     }
-    
+
     if (looping) {
         discs[playing].loop = true
     }
@@ -334,7 +332,7 @@ function previousTrackBar() {
 
     toPlay = autoPlayOrder[(autoPlayOrder.indexOf(playing)) - 1]
     if ((autoPlayOrder.indexOf(playing)) == 0) {
-        toPlay = autoPlayOrder[autoPlayOrder.length-1]
+        toPlay = autoPlayOrder[autoPlayOrder.length - 1]
     }
     play(toPlay)
 
@@ -429,11 +427,11 @@ function queueSongAdd(song) {
 
     document.getElementById("queueList").insertAdjacentHTML('beforeend',
         `
-        <div id="queueSong${queueSongsList.length + 1}" class="col-11 col-md-8 col-lg-5 col-xl-4 col-xxl-3 musicCard rounded-2 m-2 p-2 ">
+        <div id="queueSong${queueSongsList.length + 1}" class="col-11 col-md-8 col-lg-5 col-xl-4 col-xxl-3 musicCard rounded-2 m-2 p-2 align-items-center d-flex ">
 
-                    <div class="d-flex ">
+                    <div class="d-flex align-items-center ">
 
-                        <div class="text-center justify-self-start justify-content-center   d-flex">
+                        <div class="text-center justify-self-start justify-content-center d-flex">
                             <p  id="queueNumber${queueSongsList.length + 1}" style="width: fit-content"
                                 class="fs-4 px-3 mx-0 my-auto rounded-2 queueNumber text-center col-1">${queueSongsList.length + 1}</p>
 
@@ -458,9 +456,9 @@ function queueSongAdd(song) {
 }
 
 
-function animateButtonPress(btn){
+function animateButtonPress(btn) {
     btn.classList.add("animateButtonPress")
-    setTimeout(()=>{
+    setTimeout(() => {
         btn.classList.remove("animateButtonPress")
-    },400)
+    }, 400)
 }
